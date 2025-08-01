@@ -1,6 +1,5 @@
 # Letterboxd Rating Predictor
 
-
 ## Data Collection
 - For each of my letterboxd watched movies collect 
     - Title
