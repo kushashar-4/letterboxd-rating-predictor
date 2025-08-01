@@ -1,8 +1,6 @@
-import requests
-from data.constants import OMDB_API_KEY
-import csv
-
 def cache_movie_metadata():
+    import csv
+
     data = []
     with open('data/ratings.csv', 'r') as file:
         reader = csv.DictReader(file)
@@ -15,6 +13,9 @@ def cache_movie_metadata():
         writer.writerows(data)
 
 def fetch_movie_metadata(movie_name, movie_year):
+    import requests
+    from data.constants import OMDB_API_KEY
+
     url = f"http://www.omdbapi.com/?apikey={OMDB_API_KEY}&t={movie_name}&y={movie_year}"
 
     response = requests.get(url)
