@@ -1,15 +1,14 @@
+import numpy as np
+
 movie_metadata = []
 
 def normalize_feature(value, min, max, scaled_min=0, scaled_max=1):
-    """
-    Normalize a feature value to a specified range.
-    """
     return ((value - min) / (max - min)) * (scaled_max - scaled_min) + scaled_min
 
 def load_movie_cache():
     import csv
     movie_data = []
-    with open('data/movie_cache.csv', 'r', encoding="utf-8") as cache_file:
+    with open('data/raw/movie_cache.csv', 'r', encoding="utf-8") as cache_file:
         reader = csv.DictReader(cache_file)
         for row in reader:
             movie_data.append(row)
@@ -18,7 +17,7 @@ def load_movie_cache():
 def load_ratings():
     import csv
     ratings = []
-    with open('data/ratings.csv', 'r') as file:
+    with open('data/raw/ratings.csv', 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             ratings.append(row['Rating'])
@@ -54,6 +53,15 @@ def transform(movie_data):
 
     return [*genre_multi_hot, *actors_multi_hot, *director_one_hot, normalized_runtime, normalized_rating]
 
-movie_metadata = load_movie_cache()
-xArr = [transform(movie) for movie in movie_metadata]
-yArr = load_ratings()
+def process_data():
+    movie_metadata = load_movie_cache()
+    xArr = [transform(movie) for movie in movie_metadata]
+    yArr = load_ratings()
+    return xArr, yArr
+
+def cache_processed_data():    
+    np.save("data/processed/X.npy", xArr)
+    np.save("data/processed/y.npy", yArr)
+
+xArr, yArr = process_data()
+cache_processed_data()
