@@ -15,6 +15,15 @@ def load_movie_cache():
             movie_data.append(row)
     return movie_data
 
+def load_ratings():
+    import csv
+    ratings = []
+    with open('data/ratings.csv', 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            ratings.append(row['Rating'])
+    return ratings
+
 def transform(movie_data):
     from data.constants import GENRE_LIST, TOP_DIRECTORS, TOP_ACTORS
 
@@ -43,4 +52,8 @@ def transform(movie_data):
     normalized_runtime = normalize_feature(int(movie_data['Runtime'].replace(' min', '')), 60, 300)
     normalized_rating = normalize_feature(float(movie_data['imdbRating']), 0, 10)
 
+    return [*genre_multi_hot, *actors_multi_hot, *director_one_hot, normalized_runtime, normalized_rating]
+
 movie_metadata = load_movie_cache()
+xArr = [transform(movie) for movie in movie_metadata]
+yArr = load_ratings()
