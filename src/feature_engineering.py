@@ -59,9 +59,9 @@ def process_data():
     yArr = load_ratings()
     return xArr, yArr
 
-def cache_processed_data():    
-    np.save("data/processed/X.npy", xArr)
-    np.save("data/processed/y.npy", yArr)
+# def cache_processed_data():    
+#     np.save("data/processed/X.npy", xArr)
+#     np.save("data/processed/y.npy", yArr)
 
-xArr, yArr = process_data()
-cache_processed_data()
+# xArr, yArr = process_data()
+# cache_processed_data()

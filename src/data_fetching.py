@@ -14,6 +14,11 @@ def cache_movie_metadata():
 
 def fetch_movie_metadata(movie_name, movie_year):
     import requests
+    import sys
+    import os
+    
+    # Add the parent directory to the path so we can import from data
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
     from data.constants import OMDB_API_KEY
 
     url = f"http://www.omdbapi.com/?apikey={OMDB_API_KEY}&t={movie_name}&y={movie_year}"
